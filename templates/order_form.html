@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تاكسي وصلني - خدمة التوصيل السريع</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="rtl">
+    <!-- الهيدر المحسن -->
+    <header class="header">
+        <div class="header-content">
+            <a href="{{ url_for('order_form') }}" class="logo">
+                <div class="logo-icon">
+                    🚚
+                </div>
+                <div class="logo-text">
+                    <h1>تاكسي وصلني</h1>
+                    <p class="tagline">خدمة التوصيل السريع والمضمون</p>
+                </div>
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">🚚 تاكسي وصلني</h1>
+                <p class="hero-subtitle">خدمة التوصيل السريع والمضمون في جميع أنحاء المدينة</p>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div class="form-header">
+                <h2>📦 طلب توصيل جديد</h2>
+                <p>املأ النموذج أدناه لطلب خدمة التوصيل</p>
+            </div>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('submit_order') }}" class="delivery-form">
+                <!-- رقم الواتساب فقط -->
+                <div class="form-section">
+                    <h3 class="section-title">📞 رقم الواتساب</h3>
+                    <div class="form-group whatsapp-only">
+                        <label for="whatsapp">رقم الواتساب *</label>
+                        <input type="tel" id="whatsapp" name="whatsapp" required 
+                               placeholder="أدخل رقم الواتساب مثال: 0512345678"
+                               style="text-align: center; font-size: 18px; padding: 20px;"
+                               pattern="[0-9]{10}" 
+                               title="يرجى إدخال 10 أرقام">
+                        <small class="form-text">سيتم التواصل معك عبر واتساب لتأكيد طلبك</small>
+                    </div>
+                </div><!-- تفاصيل التوصيل -->
+<div class="form-section">
+    <h3 class="section-title">📋 تفاصيل التوصيل</h3>
+    <div class="form-row">
+        <div class="form-group">
+            <label for="delivery_type">نوع التوصيل *</label>
+            <select id="delivery_type" name="delivery_type" required>
+                <option value="">اختر نوع التوصيل</option>
+                <option value="👨‍💼 توصيل موظف شهري">👨‍💼 توصيل موظف شهري</option>
+                <option value="🎓 توصيل طلاب شهري">🎓 توصيل طلاب شهري</option>
+                <option value="⚡ توصيل طلب فوري">⚡ توصيل طلب فوري</option>
+                <option value="📅 توصيل يومي">📅 توصيل يومي</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="start_date">تاريخ البدء بالتوصيل *</label>
+            <input type="datetime-local" id="start_date" name="start_date" required>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="delivery_duration">مدة التوصيل *</label>
+            <select id="delivery_duration" name="delivery_duration" required>
+                <option value="">نوع السائق</option>
+                <option value="ذكر">ذكر</option>
+                <option value="أنثى">أنثى</option>
+               <!--- <option value="نصف يوم">نصف يوم (٤-٦ ساعات)</option>
+                <option value="يوم كامل">يوم كامل</option>
+                <option value="شهري">شهري</option>-->
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="amount_paid">المبلغ المدفوع (ريال سعودي) *</label>
+            <input type="number" id="amount_paid" name="amount_paid" required 
+                   min="0" step="0.01" placeholder="0.00">
+        </div>
+    </div>
+</div>
+                <!-- المواقع -->
+                <div class="form-section">
+                    <h3 class="section-title">📍 المواقع</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="current_location">موقع التواجد الحالي *</label>
+                            <input type="text" id="current_location" name="current_location" required 
+                                   placeholder="أدخل موقعك الحالي">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="location">موقع التوصيل *</label>
+                            <input type="text" id="location" name="location" required 
+                                   placeholder="عنوان التوصيل الكامل">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <span class="btn-icon">🚀</span>
+                    تأكيد طلب التوصيل
+                </button>
+            </form>
+        </div>
+
+        <div class="features-section">
+            <div class="container">
+                <h2 class="features-title">✨ لماذا تختار تاكسي وصلني؟</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>توصيل سريع</h3>
+                        <p>خدمة توصيل فورية في جميع أنحاء المدينة</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>آمن ومضمون</h3>
+                        <p>جميع طلباتنا مؤمنة ومتابعة حتى الوصول</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💳</div>
+                        <h3>دفع آمن</h3>
+                        <p>أنظمة دفع متعددة وآمنة</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📞</div>
+                        <h3>دعم فوري</h3>
+                        <p>دعم فني على مدار الساعة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // التحقق من صحة رقم الواتساب
+        document.getElementById('whatsapp').addEventListener('blur', function() {
+            const whatsapp = this.value.trim();
+            const saudiPattern = /^(05)(5|0|3|6|4|9|1|8|7|2)([0-9]{7})$/;
+            
+            if (whatsapp && !saudiPattern.test(whatsapp)) {
+                this.style.borderColor = '#e74c3c';
+                this.style.background = '#fdf2f2';
+                alert('⚠️ يرجى إدخال رقم واتساب سعودي صحيح (مثال: 0512345678)');
+            } else {
+                this.style.borderColor = '#25D366';
+                this.style.background = '#f2fdf2';
+            }
+        });
+
+        // تعيين التاريخ والوقت الحاليين كقيمة افتراضية
+        window.addEventListener('load', function() {
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            document.getElementById('start_date').value = now.toISOString().slice(0, 16);
+        });
+// تحسين تجربة المستخدم بناءً على نوع التوصيل
+document.getElementById('delivery_type').addEventListener('change', function() {
+    const deliveryType = this.value;
+    const durationSelect = document.getElementById('delivery_duration');
+    const amountInput = document.getElementById('amount_paid');
+    
+    // إعادة تعيين الخيارات
+    durationSelect.innerHTML = `
+        <option value="">اختر المدة</option>
+        <option value="ساعة واحدة">ساعة واحدة</option>
+        <option value="٢-٣ ساعات">٢-٣ ساعات</option>
+        <option value="نصف يوم">نصف يوم (٤-٦ ساعات)</option>
+        <option value="يوم كامل">يوم كامل</option>
+        <option value="شهري">شهري</option>
+    `;
+    
+    // تعديل الخيارات بناءً على نوع التوصيل
+    if (deliveryType.includes('شهري')) {
+        // للخدمات الشهرية، نجعل "شهري" هو الخيار الافتراضي
+        durationSelect.value = 'شهري';
+        
+        // تعيين مبلغ افتراضي للخدمات الشهرية
+        if (deliveryType.includes('موظف')) {
+            amountInput.placeholder = "500.00"; // مبلغ افتراضي لتوصيل الموظفين الشهري
+        } else if (deliveryType.includes('طلاب')) {
+            amountInput.placeholder = "300.00"; // مبلغ افتراضي لتوصيل الطلاب الشهري
+        }
+    } else if (deliveryType.includes('فوري')) {
+        // للطلبات الفورية، نحدد المدة إلى ساعة واحدة
+        durationSelect.value = 'ساعة واحدة';
+        amountInput.placeholder = "50.00"; // مبلغ افتراضي للطلبات الفورية
+    } else if (deliveryType.includes('يومي')) {
+        // للتوصيل اليومي، نحدد المدة إلى يوم كامل
+        durationSelect.value = 'يوم كامل';
+        amountInput.placeholder = "100.00"; // مبلغ افتراضي للتوصيل اليومي
+    }
+});
+
+// تعيين التاريخ والوقت الحاليين كقيمة افتراضية
+window.addEventListener('load', function() {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    document.getElementById('start_date').value = now.toISOString().slice(0, 16);
+    
+    // تحفيز حدث change لتعيين القيم الافتراضية
+    document.getElementById('delivery_type').dispatchEvent(new Event('change'));
+});
+    </script>
+</body>
+</html>

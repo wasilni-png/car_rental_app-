@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - تاكسي وصلني</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="rtl">
+    <!-- الهيدر المحسن -->
+    <header class="header">
+        <div class="header-content">
+            <a href="{{ url_for('order_form') }}" class="logo">
+                <div class="logo-icon">
+                    🚚
+                </div>
+                <div class="logo-text">
+                    <h1>تاكسي وصلني</h1>
+                    <p class="tagline">خدمة التوصيل السريع والمضمون</p>
+                </div>
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="login-container">
+            <h1>تسجيل الدخول لإدارة التوصيل</h1>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('admin_login') }}">
+                <div class="form-group">
+                    <label for="username">اسم المستخدم:</label>
+                    <input type="text" id="username" name="username" required placeholder="أدخل اسم المستخدم">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">كلمة المرور:</label>
+                    <input type="password" id="password" name="password" required placeholder="أدخل كلمة المرور">
+                </div>
+                
+                <button type="submit" class="btn-submit">تسجيل الدخول</button>
+            </form>
+
+            <div class="back-to-site" style="margin-top: 25px;">
+                <a href="{{ url_for('order_form') }}" class="btn-back">← العودة إلى طلبات التوصيل</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

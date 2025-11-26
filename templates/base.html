@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}تاكسي وصلني - خدمة التوصيل السريع{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="rtl">
+    <!-- الهيدر المحسن -->
+    <header class="header">
+        <div class="header-content">
+            <a href="{{ url_for('order_form') }}" class="logo">
+                <div class="logo-icon">
+                    🚚
+                </div>
+                <div class="logo-text">
+                    <h1>تاكسي وصلني</h1>
+                    <p class="tagline">خدمة التوصيل السريع والمضمون</p>
+                </div>
+            </a>
+            
+            {% if session.logged_in %}
+            <div class="admin-nav">
+                <a href="{{ url_for('view_orders') }}" class="btn-admin">لوحة التحكم</a>
+            </div>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>
