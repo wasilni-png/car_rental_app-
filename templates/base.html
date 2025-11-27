@@ -21,18 +21,17 @@
                 </div>
             </a>
             
-            {% if session.logged_in %}
             <div class="admin-nav">
                 <a href="{{ url_for('view_orders') }}" class="btn-admin">لوحة التحكم</a>
             </div>
-            {% endif %}
+            
         </div>
     </header>
 
     <div class="container">
-        {% block content %}{% endblock %}
+        
     </div>
 
-    {% block scripts %}{% endblock %}
+
 </body>
 </html>
