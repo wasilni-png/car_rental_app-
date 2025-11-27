@@ -3,34 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}تاكسي وصلني - خدمة التوصيل السريع{% endblock %}</title>
+    <title>{% block title %}تاكسي وصلني | خدمة التوصيل السريع والموثوق{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="rtl">
-    <!-- الهيدر المحسن -->
     <header class="header">
-        <div class="header-content">
-            <a href="{{ url_for('order_form') }}" class="logo">
-                <div class="logo-icon">
+        <nav class="header-content">
+            <a href="{{ url_for('order_form') }}" class="logo" aria-label="العودة للصفحة الرئيسية - تاكسي وصلني">
+                <div class="logo-icon" aria-hidden="true">
                     🚚
                 </div>
                 <div class="logo-text">
-                    <h1>تاكسي وصلني</h1>
+                    <h1 class="site-title">تاكسي وصلني</h1>
                     <p class="tagline">خدمة التوصيل السريع والمضمون</p>
                 </div>
             </a>
             
             <div class="admin-nav">
-                <a href="{{ url_for('view_orders') }}" class="btn-admin">لوحة التحكم</a>
+                <a href="{{ url_for('view_orders') }}" class="btn-admin" role="button" aria-label="الانتقال إلى لوحة التحكم">
+                    لوحة التحكم
+                </a>
             </div>
-            
-        </div>
+        </nav>
     </header>
 
-    <div class="container">
+    <main class="container">
+        {% block content %}
         
-    </div>
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2025 تاكسي وصلني. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
 
 
 </body>
